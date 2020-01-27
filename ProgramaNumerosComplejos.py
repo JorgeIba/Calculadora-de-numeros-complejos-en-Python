@@ -1,4 +1,3 @@
-
 import math
 import matplotlib.pyplot as plt
 import numpy as np
@@ -162,7 +161,7 @@ def buscarImaginario(texto):
 ventana = Tk()
 ventana.title("Calculadora de números complejos")
 ventana.resizable(False,False)
-
+#ventana.iconbitmap(r".../logo.ico") indicar el path de la imagen .ico
 framePrincipal = Frame(ventana, width = 450, height = 500)
 framePrincipal.pack()
 
@@ -230,12 +229,12 @@ def funcionBoton():
         labelProducto['text'] = "Producto: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resProducto))
 
         
-        labelCociente['text'] = "Cociente: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
+        labelCociente['text'] = "División: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
 
         
-        labelExponente['text'] = "Exponenciacion: ({})^{} = {}".format(str(numeroComplejo1), n, str(resExponente))
+        labelExponente['text'] = "Exponenciacioó: ({})^{} = {}".format(str(numeroComplejo1), n, str(resExponente))
 
-        numeros = {numeroComplejo1: "Primer numero", numeroComplejo2: "Segundo Numero", resSuma: "Suma", resResta: "Resta", 
+        numeros = {numeroComplejo1: "Primer número", numeroComplejo2: "Segundo Número", resSuma: "Suma", resResta: "Resta", 
                     resProducto: "Producto", resCociente: "Division", resExponente: "Exponencial"}
 
         Complejo.graficar(numeros)
@@ -244,7 +243,7 @@ def funcionBoton():
         labelAviso.place(x = 80, y = 380)        
     
 
-labelAviso = Label(framePrincipal, text = "Algo ha ocurrido, checa la entrada de los datos")
+labelAviso = Label(framePrincipal, text = "Algo ha ocurrido, checa la entrada de los datos.")
 
 CalcularButton = Button(framePrincipal, text = "Calcular", command = funcionBoton, width = 7, height = 7)
 CalcularButton.place(x = 315, y = 75)
