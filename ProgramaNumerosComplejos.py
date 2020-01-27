@@ -1,3 +1,6 @@
+#Programa realizado por Jorge Ibáñez, toda la autoría es parte de él pero lo puedes copiar si 
+#te lo dejaron de tarea y aún no la has hecho.
+
 import math
 import matplotlib.pyplot as plt
 import numpy as np
