@@ -1,9 +1,5 @@
-#Programa realizado por Jorge Ibáñez, toda la autoría es parte de él pero lo puedes copiar si 
-#te lo dejaron de tarea y aún no la has hecho.
-
 import math
 import matplotlib.pyplot as plt
-import numpy as np
 import re
 from tkinter import *
 
@@ -85,28 +81,95 @@ class Complejo:
         y = (r**exponente) * math.sin(exponente*theta)
         return Complejo(x,y)
 
+    def raices(ComplejoA, n):
+        dictRaices = {}
+        x = ComplejoA.real
+        y = ComplejoA.imaginario
+        r = (x**2 + y**2)**(1/2)
+        r = r**(1/n)
+        if x==0:
+            if y>0:
+                theta = 90
+            else:
+                theta = 270
+        else:
+            theta = math.atan( y / x ) 
+
+        if x < 0 and y < 0: #Ajuste del angulo
+            theta = 2*math.pi + theta
+        elif x < 0 and y > 0:
+            theta = math.pi + theta
+        elif x > 0 and y < 0:
+            theta = 2*math.pi + theta
+        
+        for i in range(n):
+            real = math.cos( (theta + 2*math.pi*i)/n )
+            imaginaria = math.sin( (theta + 2*math.pi*i)/n  )
+            ComplejoRes = Complejo( r*real, r*imaginaria  )
+            dictRaices[ComplejoRes] = "Z" + str(i)
+        
+        return dictRaices
+
+
     
-    def graficar(DictComplejos):
-        xs = []
-        ys = []
+    def graficar(DictComplejos, DictRaices):
+        fig, graficas = plt.subplots(2, figsize = (10,6))
+        fig2, graficaRaices = plt.subplots(1, figsize = (10,6))
+        
+        graficas[0].set_title("Operaciones con los numeros complejos")
+        graficas[1].set_title("Potenciación del primer complejo")
+        graficaRaices.set_title("Raíces del número complejo")
+
+        auxX = []
+        auxY = []
+        auxX2 = []
+        auxY2 = []
+
         for numeroComplejo, leyenda in DictComplejos.items():
             if numeroComplejo != None:
-                plt.scatter(numeroComplejo.real, numeroComplejo.imaginario  , label = leyenda)
-                xs.append(numeroComplejo.real)
-                ys.append(numeroComplejo.imaginario)
+                if leyenda != "Potenciacion":
+                    graficas[0].scatter(numeroComplejo.real, numeroComplejo.imaginario, label = leyenda)
+                    auxX.append( abs(numeroComplejo.real) )
+                    auxY.append( abs(numeroComplejo.imaginario))
+                else:
+                    graficas[1].scatter(numeroComplejo.real, numeroComplejo.imaginario, label = leyenda)
+                    realPotencia = numeroComplejo.real
+                    imaginarioPotencia = numeroComplejo.imaginario
+                   
         
-        x = max(xs)
-        y = max(ys)
+        for numeroComplejo, leyenda in DictRaices.items():
+            if numeroComplejo != None:
+                graficaRaices.scatter(numeroComplejo.real, numeroComplejo.imaginario, label = leyenda)
+                auxX2.append( abs(numeroComplejo.real))
+                auxY2.append( abs(numeroComplejo.imaginario))
+             
+    
+        x = max(auxX)
+        y = max(auxY)
+        x2= max(auxX2)
+        y2 = max(auxY2)
 
-        plt.plot([-x-10, x+10], [0,0], "black")
-        plt.plot([0,0], [-y-10, y + 10], "black")  #Para graficar los ejes
-        plt.axis([ -x-10, x+10, -y-10, y+10 ]) #De donde a donde van los ejes
-        plt.title("Grafica")
+        graficas[0].plot( [-1000000, 1000000], [0, 0],  color = "black" )
+        graficas[0].plot( [0, 0], [-1000000, 1000000], color = "black"  )
+        graficas[0].axis( (-2*x, 2*x, -2*y, 2*y) )
+        graficas[0].legend()
+
+        graficas[1].plot( [-1000000, 1000000], [0, 0], color = "black"  )
+        graficas[1].plot( [0, 0], [-1000000, 1000000], color = "black"  )
+        graficas[1].axis( (-2*realPotencia, 2*realPotencia, -2*imaginarioPotencia, 2*imaginarioPotencia) )
+        graficas[1].legend()
+       
+        graficaRaices.plot( [-1000000, 1000000], [0, 0], color = "black"  )
+        graficaRaices.plot( [0, 0], [-1000000, 1000000], color = "black"  )
+        graficaRaices.axis( (-2*x2, 2*x2, -2*y2, 2*y2) )
+        graficaRaices.legend()
         
-        plt.legend()
-        plt.grid(True)
-        
+
+        graficas[0].grid()
+        graficas[1].grid()
+        graficaRaices.grid()
         plt.show()
+
 
 #REGEX
 def validarEntrada(texto):
@@ -163,9 +226,9 @@ def buscarImaginario(texto):
 
 ventana = Tk()
 ventana.title("Calculadora de números complejos")
-ventana.resizable(False,False)
+
 #ventana.iconbitmap(r".../logo.ico") indicar el path de la imagen .ico
-framePrincipal = Frame(ventana, width = 450, height = 500)
+framePrincipal = Frame(ventana, width = 550, height = 500)
 framePrincipal.pack()
 
 #Labels
@@ -175,7 +238,7 @@ Complejo1Label.place(x = 25, y = 20)
 Complejo2Label = Label(framePrincipal, text = "Ingrese el segundo número complejo.", padx = 10, pady = 10)
 Complejo2Label.place(x = 20, y = 90)
 
-numeroNLabel = Label(framePrincipal, text = "Ingrese un número en los reales.", padx = 10, pady = 10)
+numeroNLabel = Label(framePrincipal, text = "Ingrese un número en los naturales.", padx = 10, pady = 10)
 numeroNLabel.place(x = 33, y = 160)
 
 labelSuma = Label(framePrincipal)
@@ -235,14 +298,28 @@ def funcionBoton():
         labelCociente['text'] = "División: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
 
         
-        labelExponente['text'] = "Exponenciacioó: ({})^{} = {}".format(str(numeroComplejo1), n, str(resExponente))
+        labelExponente['text'] = "Exponenciación: ({})^{} = {}".format(str(numeroComplejo1), n, str(resExponente))
 
         numeros = {numeroComplejo1: "Primer número", numeroComplejo2: "Segundo Número", resSuma: "Suma", resResta: "Resta", 
-                    resProducto: "Producto", resCociente: "Division", resExponente: "Exponencial"}
+                    resProducto: "Producto", resCociente: "Division", resExponente: "Potenciacion"}
 
-        Complejo.graficar(numeros)
+
+        textoRaices = ""
+        raices = Complejo.raices(numeroComplejo2, int(n))
+        for numero, legend in raices.items():
+            textoRaices += legend + ":  " + str(numero) + "\n"
+            
+        labelRaices['text'] = textoRaices
+
+        ventanaRaices.update()
+        ventanaRaices.deiconify()
+
+        Complejo.graficar(numeros, raices)      
+        
+        
     except Exception as e:
         print(type(e))
+        print(e)
         labelAviso.place(x = 80, y = 380)        
     
 
@@ -253,4 +330,22 @@ CalcularButton.place(x = 315, y = 75)
 
 
 
+#Ventana para las raices
+def ocultarVentana():
+    ventanaRaices.withdraw()
+    return
+
+ventanaRaices = Tk()
+ventanaRaices.title("Raices Segundo Numero Complejo")
+ventanaRaices.withdraw()
+ventanaRaices.protocol("WM_DELETE_WINDOW", ocultarVentana)
+
+frameRaices = Frame(ventanaRaices, width = 450, height = 700)
+frameRaices.pack()
+
+labelRaices = Label(frameRaices)
+labelRaices.place(x = 165, y = 15)
+
+
+ventanaRaices.mainloop()
 ventana.mainloop()
