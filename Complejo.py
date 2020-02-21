@@ -52,7 +52,7 @@ class Complejo:
             return None
     
 
-    def exponenciar(ComplejoBase, exponente):
+    def potenciar(ComplejoBase, exponente):
         x = ComplejoBase.real
         y = ComplejoBase.imaginario
 

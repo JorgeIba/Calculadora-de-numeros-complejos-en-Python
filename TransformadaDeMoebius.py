@@ -7,8 +7,6 @@ import matplotlib.pyplot as plt
 
 def evaluarTransformacion(complejoA, constanteA, constanteB):
     resComplejo =  (complejoA * constanteA) + constanteB
-    if resComplejo.real == 0 and resComplejo.imaginario == 0:
-        return None
     return resComplejo
 
 def PuntoRecta(points):
@@ -16,40 +14,56 @@ def PuntoRecta(points):
     x2, y2 = points[1].real, points[1].imaginario
     x3, y3 = points[2].real, points[2].imaginario
     if x1 == x2 and y1 == y2:
-        graficar(points[0])
-    elif x1 == x2 and y1 != y2:
-        graficar(x = x1) 
-    elif x1 != x2 and y1 == y2:
-        graficar(y = y1) 
+        graficar(punto1 = points[0])
     else:
-        pendiente = (y2-y1)/(x2-x1)
-        graficar(pendienteLinea = pendiente, punto =  points[0])
+        graficar(punto1 = points[0], punto2 = points[1])
 
-    
-
-def graficar(C = None, D = None, E = None, pendienteLinea = None, x = None, y = None, punto = None):
+def graficar(C = None, D = None, E = None, punto1 = None, punto2=None):
     fig, grafica = plt.subplots(1, figsize = (10,6))
-    if C != None:
-        text = "(x + ({}))^2 + (y + ({}))^2 = {}".format(C, D, -E+(D/2)**2 + (C/2)**2)
+    grafica.plot( [-1000000, 1000000], [0, 0],  color = "black" )
+    grafica.plot( [0, 0], [-1000000, 1000000], color = "black"  ) 
+    grafica.grid()
+    if C != None: #Circulo
+        text = r"$[x - ({})]^{} + [y - ({})]^{} = {}$".format(-round(C,3),2, -round(D,3),2, round(-E+(D/2)**2 + (C/2)**2, 3))
         R2 = (-E + (D/2)**2 + (C/2)**2)
         theta = np.linspace(0, 2*np.pi, 100)
-        # the radius of the circle
         r = np.sqrt(R2)
-        # compute x1 and x2
         x1 = r*np.cos(theta) - (C)
         x2 = r*np.sin(theta) - (D)
-        # create the figure
-        grafica.plot(x1, x2)
+        grafica.plot(x1, x2, color = 'red')
         grafica.set_aspect(1)
-        grafica.plot( [-1000000, 1000000], [0, 0],  color = "black" )
-        grafica.plot( [0, 0], [-1000000, 1000000], color = "black"  ) 
         grafica.set_xlim(-C - 3*r/2, -C + 3*r/2)
         grafica.set_ylim(-D - 3*r/2, -D + 3*r/2)
-        grafica.grid()
         grafica.set_title(text)
-        plt.show()
+    elif punto1 != None and punto2 == None: #Punto
+        grafica.set_title("Punto: " + str(punto1))
+        grafica.scatter(punto1.real, punto1.imaginario, color = 'red')
+        grafica.set_xlim(punto1.real - 5, punto1.real + 5)
+        grafica.set_ylim(punto1.imaginario - 5, punto1.imaginario + 5)
+    else:
+        if punto1.real == punto2.real and punto1.imaginario!=punto2.imaginario: #Recta y = C
+            grafica.set_title("Recta: y = {}".format(punto1.real))
+            grafica.plot([punto1.real, punto1.real], [-100000, 100000], color = 'red')
+            grafica.set_xlim(punto1.real - 5, punto1.real + 5)
+            grafica.set_ylim(-10, 10)
         
+        elif punto1.real != punto2.real and punto1.imaginario==punto2.imaginario: #Recta x = C
+            grafica.set_title("Recta: x = {}".format(punto1.imaginario))
+            grafica.plot([-100000, 100000], [punto1.imaginario, punto1.imaginario], color = 'red')
+            grafica.set_xlim(-10, 10)
+            grafica.set_ylim(punto1.imaginario - 5, punto1.imaginario + 5)
+        else:   #Recta y = mx + C
+            m = (punto2.imaginario - punto1.imaginario)/(punto2.real - punto1.real)
+            constant = m*punto1.real + punto1.imaginario
+            grafica.set_title( "Recta: y = {}*x + {}".format(m, constant) )
+            grafica.plot([-100000, 100000], [ m*(-100000) + constant, m*(100000) + constant ], color = 'red')
+            grafica.set_xlim(-15, 15)
+            grafica.set_ylim(constant - 10, constant + 10)
 
+    
+    plt.show()
+
+        
 def TransformadaMoebius():
 
     ventanaTrans = Tk();
@@ -99,6 +113,8 @@ def TransformadaMoebius():
     kEntry.place(x = 30, y = 445)
     kLabel = Label(frameTrans, text = "Ingrese el valor de k")
     kLabel.place(x = 140, y = 445)
+
+    expresionLabel = Label(frameTrans, text = "az ]")
 
     def funcionBoton():
         
@@ -167,35 +183,10 @@ def TransformadaMoebius():
             
 
             
-            
-            
-        
-
-
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
     Calcular1Button = Button(frameTrans, text = "Calcular", command = funcionBoton, width = 7, height = 1)
     Calcular1Button.place(x = 30, y = 10)    
 
     
-
-
-    #arriba = Complejo.multiplicar(ComplejoA, a)
-    #arriba = Complejo.sumar(arriba, b)
-    #abajo = Complejo.multiplicar(ComplejoA, c)
-    #abajo = Complejo.sumar(arriba, d)
     ventanaTrans.mainloop()
 
 

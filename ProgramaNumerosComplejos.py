@@ -70,7 +70,7 @@ def funcionBoton():
         resResta = numeroComplejo1 - numeroComplejo2
         resProducto = numeroComplejo1 * numeroComplejo2
         resCociente = numeroComplejo1 / numeroComplejo2
-        resExponente = Complejo.exponenciar(numeroComplejo1, n)
+        resPotencia = Complejo.potenciar(numeroComplejo1, n)
 
         
         labelSuma['text'] = "Suma: ({}) + ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resSuma))
@@ -85,10 +85,10 @@ def funcionBoton():
         labelCociente['text'] = "División: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
 
         
-        labelExponente['text'] = "Exponenciación: ({})^{} = {}".format(str(numeroComplejo1), n, str(resExponente))
+        labelExponente['text'] = "Potenciacion: ({})^{} = {}".format(str(numeroComplejo1), n, str(resPotencia))
 
         numeros = {numeroComplejo1: "Primer número", numeroComplejo2: "Segundo Número", resSuma: "Suma", resResta: "Resta", 
-                    resProducto: "Producto", resCociente: "Division", resExponente: "Potenciacion"}
+                    resProducto: "Producto", resCociente: "Division", resPotencia: "Potenciacion"}
 
 
         textoRaices = ""
