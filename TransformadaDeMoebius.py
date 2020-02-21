@@ -64,9 +64,8 @@ def graficar(C = None, D = None, E = None, punto1 = None, punto2=None):
     plt.show()
 
         
-def TransformadaMoebius():
-
-    ventanaTrans = Tk();
+def TransformadaMoebius(ventanaTrans):
+    #ventanaTrans = Tk();
     ventanaTrans.title("Transformada de Moebius")
     frameTrans = Frame(ventanaTrans, width = 550, height = 500)
     frameTrans.pack()
@@ -114,10 +113,9 @@ def TransformadaMoebius():
     kLabel = Label(frameTrans, text = "Ingrese el valor de k")
     kLabel.place(x = 140, y = 445)
 
-    expresionLabel = Label(frameTrans, text = "az ]")
+    #expresionLabel = Label(frameTrans, text = "az ]")
 
-    def funcionBoton():
-        
+    def funcionBotonTransformada():
         a = validarEntrada(aGet.get())
         b = validarEntrada(bGet.get())
         c = validarEntrada(cGet.get())
@@ -125,6 +123,8 @@ def TransformadaMoebius():
         radio = float(radioGet.get())
         h = float(hGet.get())
         k = float(kGet.get())
+
+        
 
         points = []
         complejo1 = Complejo(h,k+radio)
@@ -183,12 +183,12 @@ def TransformadaMoebius():
             
 
             
-    Calcular1Button = Button(frameTrans, text = "Calcular", command = funcionBoton, width = 7, height = 1)
+    Calcular1Button = Button(frameTrans, text = "Calcular", command = funcionBotonTransformada, width = 7, height = 1)
     Calcular1Button.place(x = 30, y = 10)    
 
     
-    ventanaTrans.mainloop()
+    #ventanaTrans.mainloop()
 
 
-TransformadaMoebius()
+
 

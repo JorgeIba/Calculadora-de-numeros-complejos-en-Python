@@ -1,6 +1,8 @@
 from tkinter import *
 from Validar import *
 from Complejo import *
+from TransformadaDeMoebius import *
+import threading
 
 
 
@@ -115,6 +117,14 @@ labelAviso = Label(framePrincipal, text = "Algo ha ocurrido, checa la entrada de
 CalcularButton = Button(framePrincipal, text = "Calcular", command = funcionBoton, width = 7, height = 7)
 CalcularButton.place(x = 315, y = 75)
 
+
+def startMoebius():
+    top = Toplevel()
+    TransformadaMoebius(top)
+
+
+TransformadaButton = Button(framePrincipal, text = "Calcular Transformada de Moebius", command = startMoebius, width = 25, height = 2)
+TransformadaButton.place(x = 310, y = 200)
 
 
 #Ventana para las raices
