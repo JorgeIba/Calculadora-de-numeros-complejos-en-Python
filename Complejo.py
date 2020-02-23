@@ -15,12 +15,12 @@ class Complejo:
 
     def __str__(self):
         if self.imaginario >= 0:
-            x = round(self.real*1000)/1000
-            y = round(self.imaginario*1000)/1000 #Redondeo a 3 decimales
+            x = round(self.real, 4)
+            y = round(self.imaginario, 4) #Redondeo a 3 decimales
             return "{} + {}i".format(x, y)
         elif self.imaginario < 0:
-            x = round(self.real*1000)/1000
-            y = round(self.imaginario*1000)/1000 #Redondeo a 3 decimales
+            x = round(self.real,4)
+            y = round(self.imaginario,4)  #Redondeo a 3 decimales
             return "{} - {}i".format(x, -y)
 
     def __add__(self, ComplejoB):
@@ -87,11 +87,84 @@ class Complejo:
         y = ComplejoA.imaginario
         r = (x**2 + y**2)**(1/2)
         r = r**(1/n)
+        theta = Complejo.angulo(ComplejoA)
+
+        for i in range(0,n):
+            real = math.cos( (theta + 2*math.pi*i)/n )
+            imaginaria = math.sin( (theta + 2*math.pi*i)/n  )
+            ComplejoRes = Complejo( r*real, r*imaginaria  )
+            dictRaices[ComplejoRes] = "Z" + str(i)
+        
+        return dictRaices
+
+
+    def exponencial(ComplejoA):
+        ComplejoRes = Complejo()
+        ComplejoRes.real = math.exp(ComplejoA.real) * math.cos(ComplejoA.imaginario)
+        ComplejoRes.imaginario = math.exp(ComplejoA.real) * math.sin(ComplejoA.imaginario)
+        return ComplejoRes
+
+    def seno(ComplejoA):
+        ComplejoRes = Complejo()
+        ComplejoRes = Complejo.exponencial(ComplejoA*Complejo(0,1)) - Complejo.exponencial(ComplejoA*Complejo(0,-1))
+        ComplejoRes = ComplejoRes/Complejo(0,2)
+        return ComplejoRes
+
+    def coseno(ComplejoA):
+        ComplejoRes = Complejo()
+        ComplejoRes = Complejo.exponencial(ComplejoA*Complejo(0,1)) + Complejo.exponencial(ComplejoA*Complejo(0,-1))
+        ComplejoRes = ComplejoRes/Complejo(2,0)
+        return ComplejoRes
+
+    def tangente(ComplejoA):
+        return Complejo.seno(ComplejoA) / Complejo.coseno(ComplejoA)
+    
+    def cotangente(ComplejoA):
+        return Complejo(1,0) / Complejo.tangente(ComplejoA)
+
+    def cosecante(ComplejoA):
+        ComplejoSeno = Complejo.seno(ComplejoA)
+        return Complejo(1,0) / ComplejoSeno
+
+    def secante(ComplejoA):
+        ComplejoCoseno = Complejo.coseno(ComplejoA)
+        return Complejo(1,0) / ComplejoCoseno
+    
+    def senoHiperbolico(ComplejoA):
+        return Complejo(0,-1) * Complejo.seno( Complejo(0, 1) * ComplejoA  )
+    
+    def cosenoHiperbolico(ComplejoA):
+        return Complejo.coseno( Complejo(0,1) * ComplejoA )
+
+    def tangenteHiperbolico(ComplejoA):
+        return Complejo.senoHiperbolico(ComplejoA)/Complejo.cosenoHiperbolico(ComplejoA)
+
+    def cotangenteHiperbolico(ComplejoA):
+        return Complejo(1,0) / Complejo.tangenteHiperbolico(ComplejoA)
+
+    def cosecanteHiperbolico(ComplejoA):
+        ComplejoSenh = Complejo.senoHiperbolico(ComplejoA)
+        return Complejo(1,0) / ComplejoSenh
+
+    def secanteHiperbolico(ComplejoA):
+        ComplejoCosh = Complejo.cosenoHiperbolico(ComplejoA)
+        return Complejo(1,0) / ComplejoCosh
+
+    def angulo(ComplejoA):
+        x = ComplejoA.real
+        y = ComplejoA.imaginario
         if x==0:
             if y>0:
                 theta = math.pi/2
             else:
                 theta = 3*math.pi/2
+        elif y == 0:
+            if x > 0:
+                theta = 0
+            else:
+                theta = math.pi
+        elif x == 0 and y == 0:
+            theta = 0
         else:
             theta = math.atan( y / x ) 
 
@@ -101,17 +174,58 @@ class Complejo:
             theta = math.pi + theta
         elif x > 0 and y < 0:
             theta = 2*math.pi + theta
-        
-        
-        for i in range(0,n):
-            real = math.cos( (theta + 2*math.pi*i)/n )
-            imaginaria = math.sin( (theta + 2*math.pi*i)/n  )
-            ComplejoRes = Complejo( r*real, r*imaginaria  )
-            dictRaices[ComplejoRes] = "Z" + str(i)
-        
-        return dictRaices
+        return theta
 
-    def graficar(DictComplejos, DictRaices):
+
+    def logaritmoNatural(ComplejoA):
+        x = ComplejoA.real
+        y = ComplejoA.imaginario
+        theta = Complejo.angulo(ComplejoA)
+        r = (x**2 + y**2)**(1/2)
+        if r == 0:
+            return None
+        return Complejo(math.log(r),theta)
+    
+    def arcoSeno(ComplejoA):
+        
+        ComplejoRaices = Complejo.raices( Complejo(1,0)  - ComplejoA*ComplejoA   , 2 )
+        Raiz = list(ComplejoRaices.keys())
+        Raiz = Raiz[0]
+        ComplejoArgumento = Complejo(0,1)*ComplejoA + Raiz
+        return Complejo(0,-1) * Complejo.logaritmoNatural(ComplejoArgumento)
+
+    def arcoCoseno(ComplejoA):
+        ComplejoRaices = Complejo.raices(ComplejoA*ComplejoA  -  Complejo(1,0)  , 2 )
+        Raiz = list(ComplejoRaices.keys())
+        Raiz = Raiz[0]
+        ComplejoArgumento = ComplejoA + Raiz
+        return Complejo(0,-1) * Complejo.logaritmoNatural(ComplejoArgumento)
+
+    def arcoTangente(ComplejoA):
+        ComplejoArgumento = (Complejo(0,1) + ComplejoA) / (Complejo(0,1) - ComplejoA )
+        return (Complejo(0,1)/Complejo(2,0))  *  Complejo.logaritmoNatural(ComplejoArgumento)
+        
+    def arcoCotangente(ComplejoA):
+        ComplejoArgumento = (ComplejoA - Complejo(0,1)) / (ComplejoA + Complejo(0,1) )
+        return (Complejo(0,1)/Complejo(2,0))  *  Complejo.logaritmoNatural(ComplejoArgumento)
+
+    def arcoCosecante(ComplejoA):
+        ComplejoRaices = Complejo.raices(Complejo(1,0) - Complejo(1,0) / (ComplejoA*ComplejoA) , 2 )
+        Raiz = list(ComplejoRaices.keys())
+        Raiz = Raiz[0]
+        ComplejoArgumento = (Complejo(0,1) / ComplejoA) + Raiz
+        return Complejo(0,-1) * Complejo.logaritmoNatural(ComplejoArgumento)
+
+    def arcoSecante(ComplejoA):
+        ComplejoRaices = Complejo.raices(Complejo(1,0) / (ComplejoA*ComplejoA)  -  Complejo(1,0)  , 2 )
+        Raiz = list(ComplejoRaices.keys())
+        Raiz = Raiz[0]
+        ComplejoArgumento = (Complejo(1,0) / ComplejoA) + Raiz
+        return Complejo(0,-1) * Complejo.logaritmoNatural(ComplejoArgumento)
+        
+
+
+    def graficar(DictComplejos, DictRaices = None):
         fig, graficas = plt.subplots(2, figsize = (10,6))
         fig2, graficaRaices = plt.subplots(1, figsize = (10,6))
         

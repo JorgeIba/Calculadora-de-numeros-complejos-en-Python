@@ -133,29 +133,29 @@ def TransformadaMoebius(ventanaTrans):
         complejo4 = Complejo(h-radio,k)
 
         flag = True
-        arribaComplejo1 = evaluarTransformacion(complejo1, a, b)
-        abajoComplejo1 = evaluarTransformacion(complejo1, c, d)
+        arribaComplejo1 = (complejo1 * a) + b
+        abajoComplejo1 = (complejo1 * c) + d
         if abajoComplejo1.real == 0 and abajoComplejo1.imaginario == 0:
             flag = False
         else:
             points.append( arribaComplejo1/abajoComplejo1 )
 
-        arribaComplejo2 = evaluarTransformacion(complejo2, a, b)
-        abajoComplejo2 = evaluarTransformacion(complejo2, c, d)
+        arribaComplejo2 = (complejo2 * a) + b
+        abajoComplejo2 = (complejo2 * c) + d
         if abajoComplejo2.real == 0 and abajoComplejo2.imaginario == 0:
             flag = False
         else:
             points.append( arribaComplejo2/abajoComplejo2 )
 
-        arribaComplejo3 = evaluarTransformacion(complejo3, a, b)
-        abajoComplejo3 = evaluarTransformacion(complejo3, c, d)
+        arribaComplejo3 = (complejo3 * a) + b
+        abajoComplejo3 = (complejo3 * c) + d
         if abajoComplejo3.real == 0 and abajoComplejo3.imaginario == 0:
             flag = False
         else:
             points.append( arribaComplejo3/abajoComplejo3 )
             
-        arribaComplejo4 = evaluarTransformacion(complejo4, a, b)
-        abajoComplejo4 = evaluarTransformacion(complejo4, c, d)
+        arribaComplejo4 = (complejo4 * a) + b
+        abajoComplejo4 = (complejo4 * c) + d
         if abajoComplejo4.real == 0 and abajoComplejo4.imaginario == 0:
             flag = False
         else:

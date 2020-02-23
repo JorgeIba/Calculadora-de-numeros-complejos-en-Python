@@ -4,9 +4,9 @@ import re
 def validarEntrada(texto):
     x,y = buscarCompleto(texto)
     if x==None and y==None:
-        x,y = buscarReal(texto)
+        x,y = buscarImaginario(texto)
         if x==None and y==None:
-            x,y = buscarImaginario(texto)
+            x,y = buscarReal(texto)
     if x==None and y==None:
         return None
     else:
@@ -49,6 +49,4 @@ def buscarImaginario(texto):
         return 0, float(imaginario)
     except:
         return None, None
-
-
 
