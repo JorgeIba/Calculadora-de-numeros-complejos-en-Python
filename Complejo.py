@@ -222,8 +222,15 @@ class Complejo:
         Raiz = Raiz[0]
         ComplejoArgumento = (Complejo(1,0) / ComplejoA) + Raiz
         return Complejo(0,-1) * Complejo.logaritmoNatural(ComplejoArgumento)
-        
 
+    def graficarPunto(ComplejoA):
+        fig3, graficas = plt.subplots(1, figsize = (10,6))
+        graficas.plot( [-1000000, 1000000], [0, 0],  color = "black" )
+        graficas.plot( [0, 0], [-1000000, 1000000], color = "black"  )
+        graficas.scatter(ComplejoA.real, ComplejoA.imaginario)
+        graficas.axis( (ComplejoA.real - 5, ComplejoA.real + 5, ComplejoA.imaginario-5, ComplejoA.imaginario+5)  )
+        graficas.grid()
+        plt.show()
 
     def graficar(DictComplejos, DictRaices = None):
         fig, graficas = plt.subplots(2, figsize = (10,6))
@@ -282,3 +289,5 @@ class Complejo:
         graficas[1].grid()
         graficaRaices.grid()
         plt.show()
+
+

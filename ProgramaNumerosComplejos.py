@@ -30,13 +30,13 @@ def main():
     frameRaices.pack()
 
     #*Labels
-    Complejo1Label = Label(framePrincipal, text = "Ingrese el primer número complejo.", padx = 10, pady = 10)
+    Complejo1Label = Label(framePrincipal, text = "Ingrese el primer numero complejo.", padx = 10, pady = 10)
     Complejo1Label.place(x = 25, y = 20)
 
-    Complejo2Label = Label(framePrincipal, text = "Ingrese el segundo número complejo.", padx = 10, pady = 10)
+    Complejo2Label = Label(framePrincipal, text = "Ingrese el segundo numero complejo.", padx = 10, pady = 10)
     Complejo2Label.place(x = 25, y = 90)
 
-    numeroNLabel = Label(framePrincipal, text = "Ingrese un número en los naturales.", padx = 10, pady = 10)
+    numeroNLabel = Label(framePrincipal, text = "Ingrese un numero en los naturales.", padx = 10, pady = 10)
     numeroNLabel.place(x = 28, y = 160)
 
     labelSuma = Label(framePrincipal)
@@ -166,12 +166,12 @@ def main():
             labelProducto['text'] = "Producto: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resProducto))
 
             
-            labelCociente['text'] = "División: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
+            labelCociente['text'] = "Division: ({}) * ({}) = {}".format(str(numeroComplejo1), str(numeroComplejo2), str(resCociente))
 
             
             labelExponente['text'] = "Potenciacion: ({})^{} = {}".format(str(numeroComplejo1), n, str(resPotencia))
 
-            numeros = {numeroComplejo1: "Primer número", numeroComplejo2: "Segundo Número", resSuma: "Suma", resResta: "Resta", 
+            numeros = {numeroComplejo1: "Primer numero", numeroComplejo2: "Segundo Numero", resSuma: "Suma", resResta: "Resta", 
                         resProducto: "Producto", resCociente: "Division", resPotencia: "Potenciacion"}
 
 
@@ -197,6 +197,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resSen = Complejo.seno(numeroComplejo1)
             labelSeno['text'] = "Sen({}) = {}".format(str(numeroComplejo1), str(resSen))
+            Complejo.graficarPunto(resSen)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -207,6 +208,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCos = Complejo.coseno(numeroComplejo1)
             labelCoseno['text'] = "Cos({}) = {}".format(str(numeroComplejo1), str(resCos))
+            Complejo.graficarPunto(resCos)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -217,6 +219,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resTan = Complejo.tangente(numeroComplejo1)
             labelTangente['text'] = "Tan({}) = {}".format(str(numeroComplejo1), str(resTan))
+            Complejo.graficarPunto(resTan)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -227,6 +230,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCot = Complejo.cotangente(numeroComplejo1)
             labelCotangente['text'] = "Cot({}) = {}".format(str(numeroComplejo1), str(resCot))
+            Complejo.graficarPunto(resCot)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -237,6 +241,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCsc = Complejo.cosecante(numeroComplejo1)
             labelCosecante['text'] = "Csc({}) = {}".format(str(numeroComplejo1), str(resCsc))
+            Complejo.graficarPunto(resCsc)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -247,6 +252,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resSec = Complejo.secante(numeroComplejo1)
             labelSecante['text'] = "Csc({}) = {}".format(str(numeroComplejo1), str(resSec))
+            Complejo.graficarPunto(resSec)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -257,6 +263,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resSenh = Complejo.senoHiperbolico(numeroComplejo1)
             labelSenoH['text'] = "Senh({}) = {}".format(str(numeroComplejo1), str(resSenh))
+            Complejo.graficarPunto(resSenh)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -267,6 +274,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCosh = Complejo.cosenoHiperbolico(numeroComplejo1)
             labelCosenoH['text'] = "Cosh({}) = {}".format(str(numeroComplejo1), str(resCosh))
+            Complejo.graficarPunto(resCosh)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -277,6 +285,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resTanh = Complejo.tangenteHiperbolico(numeroComplejo1)
             labelTangenteH['text'] = "Tanh({}) = {}".format(str(numeroComplejo1), str(resTanh))
+            Complejo.graficarPunto(resTanh)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -287,6 +296,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCoth = Complejo.cotangenteHiperbolico(numeroComplejo1)
             labelCotangenteH['text'] = "Coth({}) = {}".format(str(numeroComplejo1), str(resCoth))
+            Complejo.graficarPunto(resCoth)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -297,6 +307,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resCsch = Complejo.cosecanteHiperbolico(numeroComplejo1)
             labelCosecanteH['text'] = "Csch({}) = {}".format(str(numeroComplejo1), str(resCsch))
+            Complejo.graficarPunto(resCsch)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -307,6 +318,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resSech = Complejo.secanteHiperbolico(numeroComplejo1)
             labelSecanteH['text'] = "Sech({}) = {}".format(str(numeroComplejo1), str(resSech))
+            Complejo.graficarPunto(resSech)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -317,6 +329,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcSen = Complejo.arcoSeno(numeroComplejo1)
             labelArcSeno['text'] = "ArcSen({}) = {}".format(str(numeroComplejo1), str(resArcSen))
+            Complejo.graficarPunto(resArcSen)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -327,6 +340,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcCos = Complejo.arcoCoseno(numeroComplejo1)
             labelArcCoseno['text'] = "ArcCos({}) = {}".format(str(numeroComplejo1), str(resArcCos))
+            Complejo.graficarPunto(resArcCos)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -337,6 +351,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcTan = Complejo.arcoTangente(numeroComplejo1)
             labelArcTangente['text'] = "ArcTan({}) = {}".format(str(numeroComplejo1), str(resArcTan))
+            Complejo.graficarPunto(resArcTan)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -347,6 +362,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcCot = Complejo.arcoCotangente(numeroComplejo1)
             labelArcCotangente['text'] = "ArcCot({}) = {}".format(str(numeroComplejo1), str(resArcCot))
+            Complejo.graficarPunto(resArcCot)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -357,6 +373,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcCsc = Complejo.arcoCosecante(numeroComplejo1)
             labelArcCosecante['text'] = "ArcCsc({}) = {}".format(str(numeroComplejo1), str(resArcCsc))
+            Complejo.graficarPunto(resArcCsc)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -367,6 +384,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resArcSec = Complejo.arcoSecante(numeroComplejo1)
             labelArcSecante['text'] = "ArcSec({}) = {}".format(str(numeroComplejo1), str(resArcSec))
+            Complejo.graficarPunto(resArcSec)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460)    
@@ -377,6 +395,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resExponencial = Complejo.exponencial(numeroComplejo1)
             labelExponencial['text'] = "e^({}) = {}".format(str(numeroComplejo1), str(resExponencial))
+            Complejo.graficarPunto(resExponencial)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 
@@ -387,6 +406,7 @@ def main():
             numeroComplejo1 = validarEntrada( Complejo1Get.get()  )
             resLogaritmo = Complejo.logaritmoNatural(numeroComplejo1)
             labelLogaritmo['text'] = "ln({}) = {}".format(str(numeroComplejo1), str(resLogaritmo))
+            Complejo.graficarPunto(resLogaritmo)
         except Exception as e:
             print(type(e))
             labelAviso.place(x = 320, y = 460) 

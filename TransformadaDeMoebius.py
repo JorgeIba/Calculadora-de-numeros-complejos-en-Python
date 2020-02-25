@@ -24,7 +24,7 @@ def graficar(C = None, D = None, E = None, punto1 = None, punto2=None):
     grafica.plot( [0, 0], [-1000000, 1000000], color = "black"  ) 
     grafica.grid()
     if C != None: #Circulo
-        text = r"$[x - ({})]^{} + [y - ({})]^{} = {}$".format(-round(C,3),2, -round(D,3),2, round(-E+(D/2)**2 + (C/2)**2, 3))
+        text = r"$[x - ({})]^{} + [y - ({})]^{} = {}$".format(-round(C/2,3),2, -round(D/2,3),2, round(-E+(D/2)**2 + (C/2)**2, 3))
         R2 = (-E + (D/2)**2 + (C/2)**2)
         theta = np.linspace(0, 2*np.pi, 100)
         r = np.sqrt(R2)
